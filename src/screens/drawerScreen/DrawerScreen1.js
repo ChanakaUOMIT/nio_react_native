@@ -29,13 +29,14 @@ import Icon_Ionicons from "react-native-vector-icons/Ionicons";
 import Icon_Material from "react-native-vector-icons/MaterialCommunityIcons";
 import SearchInput, { createFilter } from "react-native-search-filter";
 import CustomHeader from "../../components/Header/Header";
+import CreateDiscussion from "./../discussion/createDiscussion";
 const KEYS_TO_FILTERS = ["user.name", "subject", "description"];
 
 data = [
   {
     id: 1,
     user: {
-      name: "Juniper Test"
+      name: "Test"
     },
     subject: "Hello World!",
     description:
@@ -50,67 +51,68 @@ data = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  ",
     notification: 10
+  },
+  {
+    id: 3,
+    user: {
+      name: "you can search for me using a regex : `java$`"
+    },
+    subject: "What's Up?",
+    description:
+      "Reference site about Lorem Ipsum, giving  chanaka information on its origins, as well as a random Lipsum generator."
+  },
+  {
+    id: 4,
+    user: {
+      name: "Georgia"
+    },
+    subject: "How are you today?",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
+  },
+  {
+    id: 5,
+    user: {
+      name: "Albert"
+    },
+    subject: "Hey!",
+    description:
+      "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
+  },
+  {
+    id: 6,
+    user: {
+      name: "Zoey"
+    },
+    subject: "React Native!",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
+  },
+  {
+    id: 7,
+    user: {
+      name: "Cody"
+    },
+    subject: "is super!",
+    description:
+      "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
+  },
+  {
+    id: 8,
+    user: {
+      name: "Chili"
+    },
+    subject: "Awesome!",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
   }
-  // {
-  //   id: 3,
-  //   user: {
-  //     name: "you can search for me using a regex : `java$`"
-  //   },
-  //   subject: "What's Up?",
-  //   description:
-  //     "Reference site about Lorem Ipsum, giving  chanaka information on its origins, as well as a random Lipsum generator."
-  // },
-  // {
-  //   id: 4,
-  //   user: {
-  //     name: "Georgia"
-  //   },
-  //   subject: "How are you today?",
-  //   description:
-  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
-  // },
-  // {
-  //   id: 5,
-  //   user: {
-  //     name: "Albert"
-  //   },
-  //   subject: "Hey!",
-  //   description:
-  //     "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
-  // },
-  // {
-  //   id: 6,
-  //   user: {
-  //     name: "Zoey"
-  //   },
-  //   subject: "React Native!",
-  //   description:
-  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
-  // },
-  // {
-  //   id: 7,
-  //   user: {
-  //     name: "Cody"
-  //   },
-  //   subject: "is super!",
-  //   description:
-  //     "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
-  // },
-  // {
-  //   id: 8,
-  //   user: {
-  //     name: "Chili"
-  //   },
-  //   subject: "Awesome!",
-  //   description:
-  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
-  // }
 ];
 
 //const  { width: WIDTH } = Dimentions.get()
-class DrawerScreen1 extends Component {
+export default class DrawerScreen1 extends Component {
   constructor(props) {
     super(props);
+    this.clickHandler = this.clickHandler.bind(this);
     this.state = {
       searchTerm: ""
     };
@@ -120,6 +122,17 @@ class DrawerScreen1 extends Component {
     this.setState({ searchTerm: term });
   }
 
+  clickHandler() {
+    alert("clicked");
+    this.props.navigation.navigate("createDiscussion");
+    // this.props.navigation.navigate("SignUp");
+  }
+  createkHandler() {
+    alert("clicked");
+    this.props.navigation.navigate("loading");
+    // this.props.navigation.navigate("SignUp");
+  }
+
   render() {
     const filteredEmails = data.filter(
       createFilter(this.state.searchTerm, KEYS_TO_FILTERS)
@@ -127,7 +140,11 @@ class DrawerScreen1 extends Component {
     return (
       <ScrollView>
         <View>
-          <CustomHeader title="Discussion" alignItems="center" />
+          <CustomHeader
+            title="Discussion"
+            alignItems="center"
+            openDrawer={() => this.props.navigation.openDrawer()}
+          />
         </View>
         <View style={{ height: 60 }}>
           {/* <SearchBar /> */}
@@ -165,15 +182,6 @@ class DrawerScreen1 extends Component {
           <ScrollView>
             {filteredEmails.map(email => {
               return (
-                //   <TouchableOpacity onPress={()=>alert(email.user.name)} key={email.id} style={styles.emailItem}>
-                //     <View>
-                //       <Text>{email.user.name}</Text>
-                //       <Text style={styles.emailSubject}>{email.subject}</Text>
-                //       <Text>{email.description}</Text>
-
-                //     </View>
-                //   </TouchableOpacity>
-
                 <TouchableOpacity key={email.id} style={styles.cardContainer}>
                   <View style={styles.card}>
                     <View style={styles.headerBlock}>
@@ -220,10 +228,7 @@ class DrawerScreen1 extends Component {
                     </View>
 
                     <View style={styles.textContainer}>
-                      <Text style={styles.text}>
-                        {/* Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. */}
-                        {email.description}
-                      </Text>
+                      <Text style={styles.text}>{email.description}</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -236,14 +241,10 @@ class DrawerScreen1 extends Component {
               style={styles.TouchableOpacityStyle}
             >
               <Image
-                //We are making FAB using TouchableOpacity with an image
-                //We are using online image here
                 source={{
                   uri:
                     "https://aboutreact.com/wp-content/uploads/2018/08/bc72de57b000a7037294b53d34c2cbd1.png"
                 }}
-                //You can use you project image Example below
-                //source={require('./images/float-add-icon.png')}
                 style={styles.FloatingButtonStyle}
               />
             </TouchableOpacity>
@@ -253,8 +254,6 @@ class DrawerScreen1 extends Component {
     );
   }
 }
-
-export default DrawerScreen1;
 
 const styles = StyleSheet.create({
   container: {
