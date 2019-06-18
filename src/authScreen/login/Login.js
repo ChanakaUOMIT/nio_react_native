@@ -132,7 +132,7 @@ export default class Login extends Component {
                     onPress={this.onPressSubmitButton.bind(this)}
                     //onPress={this.loginHandler
                   >
-                    <Text style={styles.text}>Sign In</Text>
+                    <Text style={styles.text}>Sign In gg </Text>
                   </Button>
                 </TouchableHighlight>
                 <Text style={styles.forgot}>Forgot your details?</Text>
