@@ -17,11 +17,12 @@ import ForgotPassword from "./src/authScreen/forgotPassword/ForgotPassword";
 import DrawerNavigator from "./src/navigation/drawerNavigation/DrawerNavigator";
 import DrawerScreen1 from "./src/screens/drawerScreen/DrawerScreen1";
 import loading from "./src/screens/tabscreen/loading";
-import Discussion from "./src/screens/discussion/discussion";
+// import Discussion from "./src/screens/discussion/discussion";
 import createDiscussion from "./src/screens/discussion/createDiscussion";
 import CreateDiscussion from "./src/screens/discussion/createDiscussion";
 import WhatIsDiscussion from "./src/screens/discussion/whatIsDiscussion/whatIsDiscussion";
 import DiscussionParticipantList from "./src/screens/discussion/discussionParticipantList";
+import Discussion from "./src/screens/discussion/discussion";
 
 export default class App extends Component {
   render() {
@@ -38,13 +39,6 @@ const AppStackNavigator = createStackNavigator(
     // createDiscussion: {
     //   screen: CreateDiscussion
     // },
-    DiscussionParticipantList: {
-      screen: DiscussionParticipantList
-    },
-
-    WhatIsDiscussion: {
-      screen: WhatIsDiscussion
-    },
 
     Login: {
       screen: Login
@@ -73,7 +67,17 @@ const AppStackNavigator = createStackNavigator(
     },
     createDiscussion: {
       screen: createDiscussion
+    },
+    DiscussionParticipantList: {
+      screen: DiscussionParticipantList
+    },
+    WhatIsDiscussion: {
+      screen: WhatIsDiscussion
+    },
+    Discussion: {
+      screen: Discussion
     }
+
     // WhatIsDiscussion: {
     //   screen: WhatIsDiscussion
     // }

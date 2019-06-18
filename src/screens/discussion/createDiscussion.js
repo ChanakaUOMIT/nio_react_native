@@ -111,7 +111,12 @@ class CreateDiscussion extends Component {
 
   FloatingButtonEvent = () => {
     Alert.alert("Floating Button Clicked");
-  }; 
+  };
+
+  clickHandler = () => {
+    alert("Clicked");
+    this.props.navigation.navigate("Discussion");
+  };
 
   render() {
     const filteredEmails = data.filter(
