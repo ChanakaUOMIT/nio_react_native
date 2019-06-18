@@ -123,8 +123,10 @@ export default class DrawerScreen1 extends Component {
   }
 
   clickHandler() {
-    alert("clicked");
-    this.props.navigation.navigate("DiscussionParticipantList");
+    alert("clicked add");
+    // this.props.navigation.navigate("DiscussionParticipantList");
+    this.props.navigation.navigate("createDiscussion");
+
     // this.props.navigation.navigate("SignUp");
   }
   createkHandler() {

@@ -127,7 +127,7 @@ class Discussion extends Component {
     return (
       <ScrollView>
         <View>
-          <CustomHeader title="Discussion" alignItems="center" />
+          <CustomHeader title="Discussion" alignItems="center" sub="dotMenu" />
         </View>
         <View style={{ height: 60 }}>
           {/* <SearchBar /> */}
