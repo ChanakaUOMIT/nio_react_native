@@ -37,8 +37,11 @@ class CustomHeader extends Component {
       iconName,
       leftPress,
       type,
-      iconNameRight
+      iconNameRight,
+      add,
+      addParticipant
     } = this.props;
+
     const rightIcon =
       type === "sub" ? (
         <Icon_Ionicons name="ios-arrow-back" size={25} color="white" />
@@ -46,6 +49,23 @@ class CustomHeader extends Component {
         <Button transparent onPress={openDrawer}>
           <Icon name="bars" size={25} color="white" />
         </Button>
+      );
+
+    const leftIcon =
+      add === "participant" ? (
+        <Icon_Ionicons
+          onPress={addParticipant}
+          name="ios-add"
+          size={25}
+          color="white"
+        />
+      ) : (
+        <Icon
+          // name="md-notifications"
+          onPress={leftPress}
+          name={iconName}
+          style={{ fontSize: 23, color: "#ffffff" }}
+        />
       );
 
     return (
@@ -58,14 +78,7 @@ class CustomHeader extends Component {
           <Body>
             <Title style={{ textAlign: "center" }}>{title}</Title>
           </Body>
-          <Right>
-            <Icon
-              // name="md-notifications"
-              onPress={leftPress}
-              name={iconName}
-              style={{ fontSize: 23, color: "#ffffff" }}
-            />
-          </Right>
+          <Right>{leftIcon}</Right>
         </Header>
       </View>
     );
@@ -80,7 +93,8 @@ CustomHeader.propsTypes = {
   iconName: PropTypes.string,
   leftPress: PropTypes.func,
   type: PropTypes.string,
-  iconNameRight: PropTypes.string
+  iconNameRight: PropTypes.string,
+  addParticipant: PropTypes.func
 };
 
 const styles = StyleSheet.create({

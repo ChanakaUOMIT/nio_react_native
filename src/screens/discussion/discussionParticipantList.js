@@ -29,10 +29,20 @@ const data = [
 ];
 
 class DiscussionParticipantList extends Component {
+  addParticipant = () => {
+    alert("Added");
+    this.props.navigation.navigate("createDiscussion");
+  };
   render() {
     return (
       <ScrollView>
-        <CustomHeader title="" alignItems="center" type="sub" />
+        <CustomHeader
+          title=""
+          alignItems="center"
+          type="sub"
+          add="participant"
+          addParticipant={this.addParticipant}
+        />
         {/* <ListHeader /> */}
         <ScrollView>
           <Image
