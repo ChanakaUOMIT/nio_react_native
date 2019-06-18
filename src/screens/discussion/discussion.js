@@ -35,7 +35,7 @@ data = [
   {
     id: 1,
     user: {
-      name: "Juniper Test"
+      name: "Juniper"
     },
     subject: "Hello World!",
     description:
@@ -50,65 +50,65 @@ data = [
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  ",
     notification: 10
+  },
+  {
+    id: 3,
+    user: {
+      name: "you can search for me using a regex : `java$`"
+    },
+    subject: "What's Up?",
+    description:
+      "Reference site about Lorem Ipsum, giving  chanaka information on its origins, as well as a random Lipsum generator."
+  },
+  {
+    id: 4,
+    user: {
+      name: "Georgia"
+    },
+    subject: "How are you today?",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
+  },
+  {
+    id: 5,
+    user: {
+      name: "Albert"
+    },
+    subject: "Hey!",
+    description:
+      "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
+  },
+  {
+    id: 6,
+    user: {
+      name: "Zoey"
+    },
+    subject: "React Native!",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
+  },
+  {
+    id: 7,
+    user: {
+      name: "Cody"
+    },
+    subject: "is super!",
+    description:
+      "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
+  },
+  {
+    id: 8,
+    user: {
+      name: "Chili"
+    },
+    subject: "Awesome!",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
   }
-  // {
-  //   id: 3,
-  //   user: {
-  //     name: "you can search for me using a regex : `java$`"
-  //   },
-  //   subject: "What's Up?",
-  //   description:
-  //     "Reference site about Lorem Ipsum, giving  chanaka information on its origins, as well as a random Lipsum generator."
-  // },
-  // {
-  //   id: 4,
-  //   user: {
-  //     name: "Georgia"
-  //   },
-  //   subject: "How are you today?",
-  //   description:
-  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
-  // },
-  // {
-  //   id: 5,
-  //   user: {
-  //     name: "Albert"
-  //   },
-  //   subject: "Hey!",
-  //   description:
-  //     "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
-  // },
-  // {
-  //   id: 6,
-  //   user: {
-  //     name: "Zoey"
-  //   },
-  //   subject: "React Native!",
-  //   description:
-  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
-  // },
-  // {
-  //   id: 7,
-  //   user: {
-  //     name: "Cody"
-  //   },
-  //   subject: "is super!",
-  //   description:
-  //     "Reference site about Lorem Ipsum, giving information on its origins, as well as a random Lipsum generator."
-  // },
-  // {
-  //   id: 8,
-  //   user: {
-  //     name: "Chili"
-  //   },
-  //   subject: "Awesome!",
-  //   description:
-  //     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. .... To take a trivial example, which of us ever undertakes laborious physical exercise  "
-  // }
 ];
 
 //const  { width: WIDTH } = Dimentions.get()
-class DrawerScreen1 extends Component {
+class Discussion extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -254,7 +254,7 @@ class DrawerScreen1 extends Component {
   }
 }
 
-export default DrawerScreen1;
+export default Discussion;
 
 const styles = StyleSheet.create({
   container: {
