@@ -27,6 +27,7 @@ import DiscussedCard from "./discussedCard";
 import Icon_Ionicons from "react-native-vector-icons/Ionicons";
 import Icon_Material from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon_MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
 
 data = [
   {
@@ -109,6 +110,20 @@ class WhatIsDiscussion extends Component {
     this.state = { text: "" };
   }
 
+  _menu = null;
+
+  setMenuRef = ref => {
+    this._menu = ref;
+  };
+
+  hideMenu = () => {
+    this._menu.hide();
+  };
+
+  showMenu = () => {
+    this._menu.show();
+  };
+
   render() {
     return (
       <View>
@@ -139,9 +154,50 @@ class WhatIsDiscussion extends Component {
                 <Text style={styles.title}>What is Discussion</Text>
               </Body>
               <Right>
-                <TouchableOpacity transparent>
+                {/* <TouchableOpacity transparent>
                   <Icon_Ionicons name="md-contacts" color="white" size={30} />
                   <Text style={{ color: "white" }}>05</Text>
+                </TouchableOpacity> */}
+
+                <TouchableOpacity onPress={() => alert("Clicked")}>
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <Menu
+                      ref={this.setMenuRef}
+                      button={
+                        <View>
+                          <Icon_Ionicons
+                            name="md-contacts"
+                            color="white"
+                            size={30}
+                          />
+                          <Text style={{ color: "white" }}>05</Text>
+                        </View>
+                      }
+                    >
+                      <MenuItem onPress={this.gotoDiscussion}>
+                        Discussion Info
+                      </MenuItem>
+                      <MenuItem onPress={this.hideMenu}>Group Media</MenuItem>
+                      <MenuItem onPress={this.hideMenu} disabled>
+                        Search
+                      </MenuItem>
+                      <MenuDivider />
+                      <MenuItem onPress={this.hideMenu}>
+                        Mute Notification
+                      </MenuItem>
+                      <MenuItem onPress={this.hideMenu}>More</MenuItem>
+                    </Menu>
+                  </View>
+                  {/* <Icon_Entypo  name="dots-three-vertical"    
+            
+            size={25} color="white"
+            />  */}
                 </TouchableOpacity>
               </Right>
             </Header>
