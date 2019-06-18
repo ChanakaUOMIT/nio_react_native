@@ -23,6 +23,7 @@ import CreateDiscussion from "./src/screens/discussion/createDiscussion";
 import WhatIsDiscussion from "./src/screens/discussion/whatIsDiscussion/whatIsDiscussion";
 import DiscussionParticipantList from "./src/screens/discussion/discussionParticipantList";
 import Discussion from "./src/screens/discussion/discussion";
+import ModifyDiscussion from "./src/screens/discussion/modifyDiscussion";
 
 export default class App extends Component {
   render() {
@@ -67,6 +68,10 @@ const AppStackNavigator = createStackNavigator(
     },
     createDiscussion: {
       screen: createDiscussion
+    },
+
+    ModifyDiscussion: {
+      screen: ModifyDiscussion
     },
     DiscussionParticipantList: {
       screen: DiscussionParticipantList

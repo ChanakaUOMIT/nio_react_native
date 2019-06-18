@@ -88,7 +88,7 @@ class CustomHeader extends Component {
       );
 
     const leftIcon =
-      sub === "dotMenu" ? (
+      (sub === "dotMenu") & (sub != null) ? (
         <TouchableOpacity onPress={openDotMenu}>
           <View
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}

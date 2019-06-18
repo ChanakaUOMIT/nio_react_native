@@ -120,6 +120,11 @@ class Discussion extends Component {
     this.setState({ searchTerm: term });
   }
 
+  readDiscussion = () => {
+    // this.props.navigation.navigate("Login");
+    alert("Read Discussion");
+  };
+
   render() {
     const filteredEmails = data.filter(
       createFilter(this.state.searchTerm, KEYS_TO_FILTERS)
@@ -174,7 +179,11 @@ class Discussion extends Component {
                 //     </View>
                 //   </TouchableOpacity>
 
-                <TouchableOpacity key={email.id} style={styles.cardContainer}>
+                <TouchableOpacity
+                  key={email.id}
+                  style={styles.cardContainer}
+                  onPress={this.readDiscussion}
+                >
                   <View style={styles.card}>
                     <View style={styles.headerBlock}>
                       <View
