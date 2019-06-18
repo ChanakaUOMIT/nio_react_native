@@ -1,0 +1,312 @@
+import React, { Component } from 'react';
+import {View,
+    TouchableOpacity,
+    TouchableHighlight,
+    Platform, 
+    StyleSheet,
+    KeyboardAvoidingView,
+    Image,
+    
+    ScrollView,
+    
+ AsyncStorage
+      
+} from 'react-native';
+import { Container, Header, Content, Button, Text,Input, Label,Item,Form,Icon } from 'native-base';
+import { TextInput } from 'react-native-paper'; 
+import colors from '../../styles/colors';
+var config=require('./../../authScreen/config')
+
+
+ 
+export default class Login extends Component{
+constructor(props){
+    super(props);
+    this.getToken();
+    
+
+} 
+state={
+  email:'',
+  password:''
+};
+       async setToken(mytoken){
+         try{
+         await AsyncStorage.setItem("token",mytoken);
+            //this.getToken();
+       }catch(error){
+           alert("token store error");
+                    }
+}
+       async getToken(){
+        try{
+            let thistoken=await AsyncStorage.getItem("token");
+          //let a=JSON.stringify(thistoken)
+          //alert(a)
+           if(thistoken!=null){
+           alert("authentication data invalid!!!");
+    }
+        }catch(error){
+           alert("token get error");
+  }
+}
+        handleUsername=(text)=>{
+              this.setState({email:text})
+}
+        handlePassword =(text)=>{
+             this.setState({password:text})
+}
+
+
+login(email,password){
+  fetch(config.config.hostname+'/api/v1/login-user', {
+    method: 'POST',
+    headers: {
+      'X-AUTH-TOKEN': 'Px7zgU79PYR9ULEIrEetsb',
+           'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+})
+
+    .then((response) => response.json())
+    .then((res) => {
+
+        if (res.state == true) {
+          
+          this.props.navigation.navigate('DrewerNav');
+            
+        } else {
+            
+          alert("authentication data invalid!!!");
+        }
+    })
+    .done();
+}
+
+
+
+  
+
+    
+      //  this.props.navigation.navigate('DrewerNav');
+    
+    SignUpHandler=()=>{
+      this.props.navigation.navigate('SignUp')
+  }
+  render() {
+    return (
+      <KeyboardAvoidingView
+      style={styles.wrapper}
+      >
+        <View style={styles.scrollWrapper}>
+ <ScrollView style={styles.scrollView}>
+      
+        <View style={styles.LogoContainer}>
+        
+        <Image source={require('../../Images/logo.png')} style={styles.Logo}  />
+        <Text style={styles.createNew1}  >Welcome to National Intellectuals Organization</Text>
+        </View>
+        
+        
+        
+        <View>
+        <Form>
+            <Item floatingLabel>
+              <Label iconName="manu"
+                      >UserName</Label>
+              <Input // value={this.state.email}
+                      name="email"
+                      
+                      onChangeText = {this.handleUsername}
+              />
+            </Item>
+            <Item floatingLabel last>
+              <Label>Password</Label>
+              <Input secureTextEntry 
+                     //value={this.state.password}
+                     name="password"
+                     
+                           onChangeText = {this.handlePassword}
+                      />
+            </Item>
+          </Form>
+        </View>
+        <View>
+         
+       
+          
+          <TouchableHighlight >
+          <Button style={styles.btnLogin} 
+          onPress = {() => this.login(this.state.email, this.state.password)}
+              //onPress={this.loginHandler
+    >
+            <Text style={styles.text} >Sign In </Text>
+
+            </Button>
+            
+          </TouchableHighlight>
+          <Text style={styles.forgot}>Forgot your details?</Text>
+          <TouchableOpacity onPress={this.SignUpHandler}  >
+          
+          <Text style={styles.createNew}> Don't you have an account ? SIGN UP</Text>  
+                   
+            
+            
+          </TouchableOpacity>
+          
+         
+        
+        
+      </View>
+      </ScrollView>
+ </View>
+      </KeyboardAvoidingView>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: null,
+    height:null,
+    top:0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    borderColor: '#222',
+   
+    borderWidth: 1,
+    paddingLeft: 10
+    
+  },
+  wrapper:{
+         
+    flex:1,
+    backgroundColor:'#ffa811',
+    position:'relative',
+    
+    
+   
+    },
+    scrollViewWrapper:{
+    marginTop:70,
+    flex:1,
+    },
+    scrollView:{
+    paddingLeft:30,
+    paddingRight:30,
+    paddingTop:20,
+    // flex:1
+    
+    
+    },
+    Logo:{
+      
+
+       
+      width: 150,
+        height:150,
+        
+        
+      
+        
+    },
+  
+  LogoContainer: {
+    alignItems: 'center',
+    position:'relative'
+  },
+  LogoText: {
+      fontSize: 30,
+      textAlign: 'center',
+      position: 'relative',
+      top: '-26%',
+     // fontFamily: 'Titillium Web',
+      fontFamily: 'sans-serif',
+      color:'#050404'
+  },
+  LogoText1: {
+    fontSize: 30,
+    textAlign: 'center',
+    position: 'relative',
+    top: '-10%',
+   // fontFamily: 'Titillium Web',
+    fontFamily: 'sans-serif',
+    color:'#050404'
+},
+inputwrapper:{
+  paddingTop:30,
+  position:'relative',
+  alignItems:'center'
+},
+  Input:{
+      
+      width:250,
+      height:50,
+      fontSize:14,
+      textAlign: 'center',
+      
+      margin: 15,
+      borderColor: '#ffffff',
+      borderWidth: 1,
+      borderRadius:25  
+  },
+  btnLogin:
+  {
+    top:20,
+    width:220,    
+    height: 50,                 
+    backgroundColor:'#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    borderColor: '#2222',
+    opacity:0.5,
+      borderWidth:2,
+      borderRadius:28
+  },
+  text:{
+    color: '#2222',
+    fontSize: 17,
+  },
+  forgot:{
+    paddingTop:25,
+    color:'#fff',
+    justifyContent: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  createNew:{
+    
+    paddingTop:29,
+    textAlign:'center',
+    justifyContent: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    color:'#050404',
+    opacity:0.6,
+    fontSize: 14,
+
+  },
+  createNew1:{
+    top:20,
+    paddingTop:29,
+    textAlign:'center',
+    justifyContent: 'center',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    color:'#050404',
+    opacity:0.6,
+    fontSize: 14,
+
+  }
+  
+
+  
+  
+});
