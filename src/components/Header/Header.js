@@ -69,7 +69,9 @@ class CustomHeader extends Component {
       type,
       iconNameRight,
       gotoDiscussion,
-      navigation
+      navigation,
+      add,
+      goCreateDiscussion
     } = this.props;
     const rightIcon =
       type === "sub" ? (
@@ -118,12 +120,26 @@ class CustomHeader extends Component {
             />  */}
         </TouchableOpacity>
       ) : (
-        <Icon
-          // name="md-notifications"
-          onPress={leftPress}
-          name={iconName}
-          style={{ fontSize: 23, color: "#ffffff" }}
+        //   : add === "participant" ? (
+        //     <Icon_Ionicons
+        //       name="ios-add"
+        //       size={25}
+        //       color="white"
+        //       onPress={openDrawer}
+        //     />
+        //   )
+        <Icon_Ionicons
+          name="ios-add"
+          size={25}
+          color="white"
+          onPress={goCreateDiscussion}
         />
+        // <Icon
+        //   // name="md-notifications"
+        //   onPress={leftPress}
+        //   name={iconName}
+        //   style={{ fontSize: 23, color: "#ffffff" }}
+        // />
       );
 
     return (
@@ -162,7 +178,9 @@ CustomHeader.propsTypes = {
   iconNameRight: PropTypes.string,
   sub: PropTypes.string,
   openDotMenu: PropTypes.func,
-  gotoDiscussion: PropTypes.func
+  gotoDiscussion: PropTypes.func,
+  add: PropTypes.string,
+  goCreateDiscussion: PropTypes.func
 };
 
 const styles = StyleSheet.create({
