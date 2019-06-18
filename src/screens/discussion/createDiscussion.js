@@ -130,6 +130,7 @@ class CreateDiscussion extends Component {
           alignItems="center"
           type="sub"
           sub="dotMenu"
+          openDrawer={() => this.props.navigation.goBack(null)}
         />
 
         <View style={styles.cardContainer}>

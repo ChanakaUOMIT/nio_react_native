@@ -40,9 +40,12 @@ class DiscussionParticipantList extends Component {
           title=""
           alignItems="center"
           type="sub"
-          add="participant"
+          sub="participant"
           addParticipant={this.addParticipant}
           openDrawer={() => this.props.navigation.goBack(null)}
+          goCreateDiscussion={() =>
+            this.props.navigation.navigate("createDiscussion")
+          }
         />
         {/* <ListHeader /> */}
         <ScrollView>
