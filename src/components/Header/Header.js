@@ -24,6 +24,9 @@ import colors from "../../styles/colors";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import Icon_Ionicons from "react-native-vector-icons/Ionicons";
 import Icon_Entypo from "react-native-vector-icons/Entypo";
+import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
+
+// dots-three-vertical
 
 class CustomHeader extends Component {
   constructor(props) {
@@ -44,22 +47,38 @@ class CustomHeader extends Component {
     this._menu.show();
   };
 
+  gotoDiscussion = () => {
+    this._menu.hide();
+    this.props.navigation.navigate("DiscussionParticipantList");
+  };
+
+  option1Click = () => {
+    this._menu.hide();
+    this.props.option1Click();
+  };
+
   render() {
     const {
       title,
+      sub,
+      openDotMenu,
+      dotMenu,
       openDrawer,
       iconName,
       leftPress,
       type,
       iconNameRight,
-      add,
-      addParticipant,
-      sub
+      gotoDiscussion,
+      navigation
     } = this.props;
-
     const rightIcon =
       type === "sub" ? (
-        <Icon_Ionicons name="ios-arrow-back" size={25} color="white" />
+        <Icon_Ionicons
+          name="ios-arrow-back"
+          size={25}
+          color="white"
+          onPress={openDrawer}
+        />
       ) : (
         <Button transparent onPress={openDrawer}>
           <Icon name="bars" size={25} color="white" />
@@ -67,13 +86,37 @@ class CustomHeader extends Component {
       );
 
     const leftIcon =
-      add === "participant" ? (
-        <Icon_Ionicons
-          onPress={addParticipant}
-          name="ios-add"
-          size={25}
-          color="white"
-        />
+      sub === "dotMenu" ? (
+        <TouchableOpacity onPress={openDotMenu}>
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Menu
+              ref={this.setMenuRef}
+              button={
+                <Icon_Entypo
+                  name="dots-three-vertical"
+                  onPress={this.showMenu}
+                  size={25}
+                  color="white"
+                />
+              }
+            >
+              <MenuItem onPress={this.gotoDiscussion}>Discussion Info</MenuItem>
+              <MenuItem onPress={this.hideMenu}>Group Media</MenuItem>
+              <MenuItem onPress={this.hideMenu} disabled>
+                Search
+              </MenuItem>
+              <MenuDivider />
+              <MenuItem onPress={this.hideMenu}>Mute Notification</MenuItem>
+              <MenuItem onPress={this.hideMenu}>More</MenuItem>
+            </Menu>
+          </View>
+          {/* <Icon_Entypo  name="dots-three-vertical"    
+            
+            size={25} color="white"
+            />  */}
+        </TouchableOpacity>
       ) : (
         <Icon
           // name="md-notifications"
@@ -93,7 +136,15 @@ class CustomHeader extends Component {
           <Body>
             <Title style={{ textAlign: "center" }}>{title}</Title>
           </Body>
-          <Right>{leftIcon}</Right>
+          <Right>
+            {/* <Icon                            
+                                // name="md-notifications"
+                                onPress={leftPress}
+                                name={iconName}
+                                style={{fontSize: 23,  color: '#ffffff'}}  
+                            /> */}
+            {leftIcon}
+          </Right>
         </Header>
       </View>
     );
@@ -109,9 +160,9 @@ CustomHeader.propsTypes = {
   leftPress: PropTypes.func,
   type: PropTypes.string,
   iconNameRight: PropTypes.string,
-  addParticipant: PropTypes.func,
   sub: PropTypes.string,
-  openDotMenu: PropTypes.func
+  openDotMenu: PropTypes.func,
+  gotoDiscussion: PropTypes.func
 };
 
 const styles = StyleSheet.create({

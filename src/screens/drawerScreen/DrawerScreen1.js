@@ -135,6 +135,11 @@ export default class DrawerScreen1 extends Component {
     // this.props.navigation.navigate("SignUp");
   }
 
+  gotoDiscussion = () => {
+    this._menu.hide();
+    this.props.navigation.navigate("WhatIsDiscussion");
+  };
+
   render() {
     const filteredEmails = data.filter(
       createFilter(this.state.searchTerm, KEYS_TO_FILTERS)
@@ -146,6 +151,9 @@ export default class DrawerScreen1 extends Component {
             title="Discussion"
             alignItems="center"
             openDrawer={() => this.props.navigation.openDrawer()}
+            sub="dotMenu"
+            gotoDiscussion={this.gotoDiscussion}
+            navigation={this.props.navigation}
           />
         </View>
         <View style={{ height: 60 }}>
