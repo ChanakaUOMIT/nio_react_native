@@ -30,6 +30,20 @@ class CustomHeader extends Component {
     super(props);
   }
 
+  _menu = null;
+
+  setMenuRef = ref => {
+    this._menu = ref;
+  };
+
+  hideMenu = () => {
+    this._menu.hide();
+  };
+
+  showMenu = () => {
+    this._menu.show();
+  };
+
   render() {
     const {
       title,
@@ -39,7 +53,8 @@ class CustomHeader extends Component {
       type,
       iconNameRight,
       add,
-      addParticipant
+      addParticipant,
+      sub
     } = this.props;
 
     const rightIcon =
@@ -94,7 +109,9 @@ CustomHeader.propsTypes = {
   leftPress: PropTypes.func,
   type: PropTypes.string,
   iconNameRight: PropTypes.string,
-  addParticipant: PropTypes.func
+  addParticipant: PropTypes.func,
+  sub: PropTypes.string,
+  openDotMenu: PropTypes.func
 };
 
 const styles = StyleSheet.create({

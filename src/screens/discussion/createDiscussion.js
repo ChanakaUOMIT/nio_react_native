@@ -115,7 +115,8 @@ class CreateDiscussion extends Component {
 
   clickHandler = () => {
     alert("Clicked");
-    this.props.navigation.navigate("Discussion");
+    // this.props.navigation.navigate("Discussion");
+    this.props.navigation.goBack(null);
   };
 
   render() {
@@ -124,7 +125,12 @@ class CreateDiscussion extends Component {
     );
     return (
       <ScrollView style={{ backgroundColor: "white" }}>
-        <CustomHeader title="Discussion" alignItems="center" type="sub" />
+        <CustomHeader
+          title="Discussion"
+          alignItems="center"
+          type="sub"
+          sub="dotMenu"
+        />
 
         <View style={styles.cardContainer}>
           <View style={styles.card}>
