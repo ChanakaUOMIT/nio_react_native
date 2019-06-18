@@ -100,7 +100,7 @@ data = [
   }
 ];
 
-class CreateDiscussion extends Component {
+class ModifyDiscussion extends Component {
   constructor(props) {
     super(props);
     this.state = { text: "", searchTerm: "", checked: true };
@@ -115,8 +115,8 @@ class CreateDiscussion extends Component {
 
   clickHandler = () => {
     alert("Clicked");
-    // this.props.navigation.navigate("Discussion");
-    this.props.navigation.goBack(null);
+    this.props.navigation.navigate("Discussion");
+    // this.props.navigation.goBack(null);
   };
 
   render() {
@@ -257,7 +257,7 @@ class CreateDiscussion extends Component {
   }
 }
 
-export default CreateDiscussion;
+export default ModifyDiscussion;
 
 const styles = StyleSheet.create({
   container: {

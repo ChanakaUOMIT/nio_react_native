@@ -151,7 +151,7 @@ export default class DrawerScreen1 extends Component {
             title="Discussion"
             alignItems="center"
             openDrawer={() => this.props.navigation.openDrawer()}
-            sub="dotMenu"
+            // sub="dotMenu"
             gotoDiscussion={this.gotoDiscussion}
             navigation={this.props.navigation}
           />
@@ -192,7 +192,13 @@ export default class DrawerScreen1 extends Component {
           <ScrollView>
             {filteredEmails.map(email => {
               return (
-                <TouchableOpacity key={email.id} style={styles.cardContainer}>
+                <TouchableOpacity
+                  key={email.id}
+                  style={styles.cardContainer}
+                  onPress={() =>
+                    this.props.navigation.navigate("WhatIsDiscussion")
+                  }
+                >
                   <View style={styles.card}>
                     <View style={styles.headerBlock}>
                       <View

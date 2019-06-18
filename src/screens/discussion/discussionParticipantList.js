@@ -44,7 +44,7 @@ class DiscussionParticipantList extends Component {
           addParticipant={this.addParticipant}
           openDrawer={() => this.props.navigation.goBack(null)}
           goCreateDiscussion={() =>
-            this.props.navigation.navigate("createDiscussion")
+            this.props.navigation.navigate("ModifyDiscussion")
           }
         />
         {/* <ListHeader /> */}
