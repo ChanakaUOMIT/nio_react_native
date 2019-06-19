@@ -135,6 +135,7 @@ class WhatIsDiscussion extends Component {
             sub="dotMenu"
             openDotMenu={() => alert("Clicked")}
             openDrawer={() => this.props.navigation.goBack(null)}
+            navigation={this.props.navigation}
           />
 
           <View>
