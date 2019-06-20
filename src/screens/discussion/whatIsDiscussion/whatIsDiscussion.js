@@ -248,8 +248,8 @@ class WhatIsDiscussion extends Component {
       );
     } else {
       return (
-        <View style={{ flex: 1 }}>
-          <ScrollView style={{ margineBottom: 30 }}>
+        <View style={{ flex: 1, paddingBottom: 75 }}>
+          <ScrollView style={{ paddingBottom: 300 }}>
             <CustomHeader
               title=""
               alignItems="center"
@@ -334,7 +334,7 @@ class WhatIsDiscussion extends Component {
                 <View key={email.id} style={styles.cardContainer}>
                   <View style={styles.card}>
                     <View style={styles.headerBlock}>
-                      <View style={{ width: "20%", height: 75, padding: 10 }}>
+                      <View style={{ width: "23%", height: 75, padding: 10 }}>
                         <Icon_Ionicons
                           name="md-contact"
                           size={70}
