@@ -11,6 +11,7 @@ import {
 import { createDrawerNavigator, DrawerItems } from "react-navigation";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import IconOcticons from "react-native-vector-icons/Octicons";
+import IconAntDesign from "react-native-vector-icons/AntDesign";
 //import TabNavigator from '../tabNavigation/TabNavigator'
 import DrawerScreen1 from "../../screens/drawerScreen/DrawerScreen1";
 import DrawerScreen2 from "../../screens/drawerScreen/DrawerScreen2";
@@ -21,6 +22,7 @@ import userAccount from "../../authScreen/login/userAccount";
 // import CreateDiscussion from "";
 // import { Right } from 'native-base';
 import CreateDiscussion from "./../../screens/discussion/createDiscussion";
+import Logout from "./../../authScreen/logout/logout";
 
 const CustomDrawerComponent = props => (
   <SafeAreaView>
@@ -83,6 +85,13 @@ export default createDrawerNavigator(
       navigationOptions: {
         drawerLabel: "userAccount",
         drawerIcon: ({ tintColor }) => <Icon name="user-circle" size={17} />
+      }
+    },
+    DrawerScreen5: {
+      screen: Logout,
+      navigationOptions: {
+        drawerLabel: "Logout",
+        drawerIcon: ({ tintColor }) => <IconAntDesign name="logout" size={17} />
       }
     }
   },

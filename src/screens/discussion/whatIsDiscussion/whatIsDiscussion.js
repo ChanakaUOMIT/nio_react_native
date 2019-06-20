@@ -205,8 +205,8 @@ class WhatIsDiscussion extends Component {
   }
 
   createAnswer() {
-    alert(this.state.text);
-    // this.putAnswer();
+    // alert(this.state.text);
+    this.putAnswer();
   }
 
   async putAnswer() {
@@ -231,6 +231,7 @@ class WhatIsDiscussion extends Component {
         .then(response => response.json())
         .then(responseJson => {
           console.log("Put answer: ", responseJson);
+          alert(responseJson.message);
         });
     } catch (errors) {
       alert(errors);
@@ -248,7 +249,7 @@ class WhatIsDiscussion extends Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <ScrollView>
+          <ScrollView style={{ margineBottom: 30 }}>
             <CustomHeader
               title=""
               alignItems="center"
