@@ -37,17 +37,39 @@ export default class Login extends Component {
   }
 
   onPressSubmitButton() {
-    // this.onFetchLoginRecords();
-    this.props.navigation.navigate("DrewerNav");
+    this.onFetchLoginRecords();
+    // this.props.navigation.navigate("DrewerNav");
   }
+
+  setUserDetails = async data => {
+    console.log("setUserDetails", data);
+    try {
+      await AsyncStorage.setItem("userDetails", JSON.stringify(data));
+      //   await AsyncStorage.setItem('@MySuperStore:key1',mytoken);
+      console.log("userDetals saves asyn");
+
+      //   await AsyncStorage.setItem('@MySuperStore:key2',user_id);
+
+      //   console.log('user_id saves asyn');
+      //   await AsyncStorage.setItem("userID",user_id);
+      //   console.log('user_id saves asyn');
+
+      //   alert('Token saves asyn');
+      // this.getToken();
+    } catch (error) {
+      alert("Role store error");
+    }
+
+    console.log("End the setUserDetails");
+  };
 
   async onFetchLoginRecords() {
     var data = {
-      email: this.state.email,
-      password: this.state.password
+      // email: this.state.email,
+      // password: this.state.password
 
-      //  email : "admin@admin.com",
-      // password : "password"
+      email: "test@test.com",
+      password: "password"
     };
 
     try {
@@ -66,6 +88,7 @@ export default class Login extends Component {
           console.log(responseJson.success, "success");
 
           if (responseJson.success === "true") {
+            this.setUserDetails(responseJson);
             this.props.navigation.navigate("DrewerNav");
           } else {
             alert("authentication data Invalid!!!");
@@ -132,7 +155,7 @@ export default class Login extends Component {
                     onPress={this.onPressSubmitButton.bind(this)}
                     //onPress={this.loginHandler
                   >
-                    <Text style={styles.text}>Sign In gg </Text>
+                    <Text style={styles.text}>Sign In</Text>
                   </Button>
                 </TouchableHighlight>
                 <Text style={styles.forgot}>Forgot your details?</Text>

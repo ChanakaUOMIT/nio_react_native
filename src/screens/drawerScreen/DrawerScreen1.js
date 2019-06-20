@@ -10,7 +10,8 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator
 } from "react-native";
 
 import {
@@ -114,8 +115,54 @@ export default class DrawerScreen1 extends Component {
     super(props);
     this.clickHandler = this.clickHandler.bind(this);
     this.state = {
-      searchTerm: ""
+      searchTerm: "",
+      discussions: "",
+      isLoading: true
     };
+    this.fetchDiscussion();
+  }
+
+  fetchDiscussion = async () => {
+    console.log("Fetching.... Discussion");
+    await fetch("http://cupdes.com/api/v1/get-userquestions/5", {
+      method: "GET",
+      headers: {
+        "X-AUTH-TOKEN": "Px7zgU79PYR9ULEIrEetsb",
+        "Content-Type": "XMLHttpRequest"
+      }
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.datahandler(responseJson);
+        // console.log("Fetch Discussion ", responseJson);
+      })
+      // .then((res) => {
+      //     console.log("############ "+res+" ########### ")
+      //     if (res.state === true) {
+      //       this.removeToken()
+
+      //     } else {
+      //         alert(res.msg)
+      //     }
+      // })
+      .done();
+  };
+
+  datahandler(data) {
+    console.log("in dataHandler discussions ", data);
+
+    this.setState({
+      discussions: data,
+      isLoading: false
+    });
+
+    console.log(this.state.discussions, " ***********");
+
+    console.log(
+      " ***********",
+      this.state.discussions.data.data,
+      " ***********"
+    );
   }
 
   searchUpdated(term) {
@@ -141,133 +188,142 @@ export default class DrawerScreen1 extends Component {
   };
 
   render() {
-    const filteredEmails = data.filter(
-      createFilter(this.state.searchTerm, KEYS_TO_FILTERS)
-    );
-    return (
-      <ScrollView>
-        <View>
-          <CustomHeader
-            title="Discussion"
-            alignItems="center"
-            openDrawer={() => this.props.navigation.openDrawer()}
-            // sub="dotMenu"
-            gotoDiscussion={this.gotoDiscussion}
-            navigation={this.props.navigation}
-          />
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.containerWait}>
+          <ActivityIndicator size="large" color="#0000ff" />
         </View>
-        <View style={{ height: 60 }}>
-          {/* <SearchBar /> */}
-          <Header
-            style={{ backgroundColor: "#9F035C", height: 70, padding: 15 }}
-            androidStatusBarColor={"#6D0F49"}
-          >
-            {/* <Left>
-                    <Button transparent>
-                    <Icon name='arrow-back' />
-                    </Button>
-                </Left> */}
-            <View style={{ width: "90%" }}>
-              {/* <Title>Header</Title> */}
-              <SearchInput
-                onChangeText={term => {
-                  this.searchUpdated(term);
-                }}
-                style={styles.searchInput}
-                placeholder="Type a message to search"
-              />
-            </View>
-            <TouchableOpacity style={{ width: "10%" }}>
-              <Button transparent>
-                <Icon_Material name="pencil" color="white" size={25} />
-              </Button>
-            </TouchableOpacity>
-          </Header>
-        </View>
-        <View>
-          {/* <DiscussionCard />
-                <DiscussionCard />
-                <DiscussionCard /> */}
-
-          <ScrollView>
-            {filteredEmails.map(email => {
-              return (
-                <TouchableOpacity
-                  key={email.id}
-                  style={styles.cardContainer}
-                  onPress={() =>
-                    this.props.navigation.navigate("WhatIsDiscussion")
-                  }
-                >
-                  <View style={styles.card}>
-                    <View style={styles.headerBlock}>
-                      <View
-                        style={{
-                          width: "25%",
-                          height: 75,
-                          backgroundColor: "#F5F5F5",
-                          padding: 10
-                        }}
-                      >
-                        <Icon_Ionicons
-                          name="md-contact"
-                          size={45}
-                          color="#6D0F49"
-                        />
-                      </View>
-                      <View
-                        style={{
-                          width: "50%",
-                          height: 75,
-                          backgroundColor: "#F5F5F5",
-                          padding: 10
-                        }}
-                      >
-                        <Text style={styles.header}>{email.user.name}</Text>
-                        <Text>Today, 12 AM</Text>
-                      </View>
-                      <View
-                        style={{
-                          width: "25%",
-                          height: 75,
-                          backgroundColor: "#F5F5F5",
-                          padding: 10
-                        }}
-                      >
-                        <Text>{email.notification}</Text>
-                        {email.notification == 10 ? (
-                          <Text>{email.notification}</Text>
-                        ) : (
-                          <Text />
-                        )}
-                      </View>
-                    </View>
-
-                    <View style={styles.textContainer}>
-                      <Text style={styles.text}>{email.description}</Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={this.clickHandler}
-              style={styles.TouchableOpacityStyle}
+      );
+    } else {
+      const filteredEmails = this.state.discussions.data.data.filter(
+        createFilter(this.state.searchTerm, KEYS_TO_FILTERS)
+      );
+      return (
+        <ScrollView>
+          <View>
+            <CustomHeader
+              title="Discussion"
+              alignItems="center"
+              openDrawer={() => this.props.navigation.openDrawer()}
+              // sub="dotMenu"
+              gotoDiscussion={this.gotoDiscussion}
+              navigation={this.props.navigation}
+            />
+          </View>
+          <View style={{ height: 60 }}>
+            {/* <SearchBar /> */}
+            <Header
+              style={{ backgroundColor: "#9F035C", height: 70, padding: 15 }}
+              androidStatusBarColor={"#6D0F49"}
             >
-              <Image
-                source={{
-                  uri:
-                    "https://aboutreact.com/wp-content/uploads/2018/08/bc72de57b000a7037294b53d34c2cbd1.png"
-                }}
-                style={styles.FloatingButtonStyle}
-              />
-            </TouchableOpacity>
-          </ScrollView>
-        </View>
-      </ScrollView>
-    );
+              {/* <Left>
+                      <Button transparent>
+                      <Icon name='arrow-back' />
+                      </Button>
+                  </Left> */}
+              <View style={{ width: "90%" }}>
+                {/* <Title>Header</Title> */}
+                <SearchInput
+                  onChangeText={term => {
+                    this.searchUpdated(term);
+                  }}
+                  style={styles.searchInput}
+                  placeholder="Type a message to search"
+                />
+              </View>
+              <TouchableOpacity style={{ width: "10%" }}>
+                <Button transparent>
+                  <Icon_Material name="pencil" color="white" size={25} />
+                </Button>
+              </TouchableOpacity>
+            </Header>
+          </View>
+          <View>
+            {/* <DiscussionCard />
+                  <DiscussionCard />
+                  <DiscussionCard /> */}
+
+            <ScrollView>
+              {filteredEmails.map(email => {
+                return (
+                  <TouchableOpacity
+                    key={email.created_at}
+                    style={styles.cardContainer}
+                    onPress={() =>
+                      this.props.navigation.navigate("WhatIsDiscussion")
+                    }
+                  >
+                    <View style={styles.card}>
+                      <View style={styles.headerBlock}>
+                        <View
+                          style={{
+                            width: "25%",
+                            height: 75,
+                            backgroundColor: "#F5F5F5",
+                            padding: 10
+                          }}
+                        >
+                          <Icon_Ionicons
+                            name="md-contact"
+                            size={45}
+                            color="#6D0F49"
+                          />
+                        </View>
+                        <View
+                          style={{
+                            width: "50%",
+                            height: 75,
+                            backgroundColor: "#F5F5F5",
+                            padding: 10
+                          }}
+                        >
+                          <Text style={styles.header}>{email.creator}</Text>
+                          {/* <Text>Today, 12 AM</Text> */}
+                          <Text>{email.created_at}</Text>
+                        </View>
+                        <View
+                          style={{
+                            width: "25%",
+                            height: 75,
+                            backgroundColor: "#F5F5F5",
+                            padding: 10
+                          }}
+                        >
+                          <Text>{email.notification}</Text>
+                          {email.notification == 10 ? (
+                            <Text>{email.notification}</Text>
+                          ) : (
+                            <Text />
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.textContainer}>
+                        <Text style={styles.text}>{email.question}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={this.clickHandler}
+                style={styles.TouchableOpacityStyle}
+              >
+                <Image
+                  source={{
+                    uri:
+                      "https://aboutreact.com/wp-content/uploads/2018/08/bc72de57b000a7037294b53d34c2cbd1.png"
+                  }}
+                  style={styles.FloatingButtonStyle}
+                />
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </ScrollView>
+      );
+    }
   }
 }
 

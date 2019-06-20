@@ -10,7 +10,8 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator
 } from "react-native";
 import {
   Container,
@@ -107,7 +108,8 @@ data = [
 class WhatIsDiscussion extends Component {
   constructor() {
     super();
-    this.state = { text: "" };
+    this.state = { text: "", isLoading: true };
+    this.fetchDiscussion();
   }
 
   _menu = null;
@@ -124,167 +126,270 @@ class WhatIsDiscussion extends Component {
     this._menu.show();
   };
 
+  fetchDiscussion = async () => {
+    console.log("Fetching.... Discussion");
+    await fetch("http://cupdes.com/api/v1/get-question/1", {
+      method: "GET",
+      headers: {
+        "X-AUTH-TOKEN": "Px7zgU79PYR9ULEIrEetsb",
+        "Content-Type": "XMLHttpRequest"
+      }
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.datahandler(responseJson);
+        this.fetchAnswer();
+        // console.log("Fetch Discussion ", responseJson);
+      })
+      // .then((res) => {
+      //     console.log("############ "+res+" ########### ")
+      //     if (res.state === true) {
+      //       this.removeToken()
+
+      //     } else {
+      //         alert(res.msg)
+      //     }
+      // })
+      .done();
+  };
+
+  datahandler(data) {
+    console.log("in dataHandler what is discussions ", data);
+
+    this.setState({
+      discussions: data
+    });
+
+    console.log(this.state.discussions, " ***********");
+    console.log(this.state.discussions.data.question, " ***********");
+  }
+
+  fetchAnswer = async () => {
+    console.log("Fetching.... Discussion Answer");
+    await fetch("http://cupdes.com/api/v1/get-answers/1", {
+      method: "GET",
+      headers: {
+        "X-AUTH-TOKEN": "Px7zgU79PYR9ULEIrEetsb",
+        "Content-Type": "XMLHttpRequest"
+      }
+    })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.ansdatahandler(responseJson);
+        // console.log("Fetch Discussion ", responseJson);
+      })
+      // .then((res) => {
+      //     console.log("############ "+res+" ########### ")
+      //     if (res.state === true) {
+      //       this.removeToken()
+
+      //     } else {
+      //         alert(res.msg)
+      //     }
+      // })
+      .done();
+  };
+
+  ansdatahandler(data) {
+    console.log("in dataHandler what is discussions answers ", data);
+
+    this.setState({
+      answers: data,
+      isLoading: false
+    });
+
+    console.log(this.state.answers, " ***********");
+    console.log(this.state.answers.data.data, " ***********");
+
+    // console.log(this.state.discussions.data.question, " ***********");
+  }
+
+  createAnswer() {
+    alert(this.state.text);
+    // this.putAnswer();
+  }
+
+  async putAnswer() {
+    var data = {
+      // email: this.state.email,
+      // password: this.state.password
+
+      user_id: 5,
+      question_id: 1,
+      answer: this.state.text
+    };
+
+    try {
+      let response = await fetch("http://cupdes.com/api/v1/create-answer", {
+        method: "POST",
+        headers: {
+          "X-AUTH-TOKEN": "Px7zgU79PYR9ULEIrEetsb",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(responseJson => {
+          console.log("Put answer: ", responseJson);
+        });
+    } catch (errors) {
+      alert(errors);
+    }
+    this.fetchDiscussion();
+  }
+
   render() {
-    return (
-      <View>
-        <ScrollView>
-          <CustomHeader
-            title=""
-            alignItems="center"
-            type="sub"
-            sub="dotMenu"
-            openDotMenu={() => alert("Clicked")}
-            openDrawer={() => this.props.navigation.goBack(null)}
-            navigation={this.props.navigation}
-          />
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.containerWait}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <ScrollView>
+            <CustomHeader
+              title=""
+              alignItems="center"
+              type="sub"
+              sub="dotMenu"
+              openDotMenu={() => alert("Clicked")}
+              openDrawer={() => this.props.navigation.goBack(null)}
+              navigation={this.props.navigation}
+            />
 
-          <View>
-            {/* <SearchBar /> */}
-            <Header
-              style={{ backgroundColor: "#6D0F49" }}
-              androidStatusBarColor={"#6D0F49"}
-            >
-              <Left>
-                <TouchableOpacity transparent>
-                  {/* <Icon name='md-contact' /> */}
-                  <Icon_Ionicons name="md-contact" color="white" size={30} />
-                </TouchableOpacity>
-              </Left>
-              <Body>
-                {/* <Title>Header</Title> */}
-                <Text style={styles.title}>What is Discussion</Text>
-              </Body>
-              <Right>
-                {/* <TouchableOpacity transparent>
-                  <Icon_Ionicons name="md-contacts" color="white" size={30} />
-                  <Text style={{ color: "white" }}>05</Text>
-                </TouchableOpacity> */}
+            <View>
+              {/* <SearchBar /> */}
+              <Header
+                style={{ backgroundColor: "#6D0F49" }}
+                androidStatusBarColor={"#6D0F49"}
+              >
+                <Left>
+                  <TouchableOpacity transparent>
+                    {/* <Icon name='md-contact' /> */}
+                    <Icon_Ionicons name="md-contact" color="white" size={30} />
+                  </TouchableOpacity>
+                </Left>
+                <Body>
+                  {/* <Title>Header</Title> */}
+                  <Text style={styles.title}>
+                    {this.state.discussions.data.question}
+                  </Text>
+                </Body>
+                <Right>
+                  {/* <TouchableOpacity transparent>
+                    <Icon_Ionicons name="md-contacts" color="white" size={30} />
+                    <Text style={{ color: "white" }}>05</Text>
+                  </TouchableOpacity> */}
 
-                <TouchableOpacity onPress={() => alert("Clicked")}>
-                  <View
-                    style={{
-                      flex: 1,
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <Menu
-                      ref={this.setMenuRef}
-                      button={
-                        <View>
-                          <Icon_Ionicons
-                            name="md-contacts"
-                            color="white"
-                            size={30}
-                          />
-                          <Text style={{ color: "white" }}>05</Text>
-                        </View>
-                      }
+                  <TouchableOpacity onPress={() => alert("Clicked")}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
                     >
-                      <MenuItem onPress={this.gotoDiscussion}>
-                        Discussion Info
-                      </MenuItem>
-                      <MenuItem onPress={this.hideMenu}>Group Media</MenuItem>
-                      <MenuItem onPress={this.hideMenu} disabled>
-                        Search
-                      </MenuItem>
-                      <MenuDivider />
-                      <MenuItem onPress={this.hideMenu}>
-                        Mute Notification
-                      </MenuItem>
-                      <MenuItem onPress={this.hideMenu}>More</MenuItem>
-                    </Menu>
-                  </View>
-                  {/* <Icon_Entypo  name="dots-three-vertical"    
-            
-            size={25} color="white"
-            />  */}
-                </TouchableOpacity>
-              </Right>
-            </Header>
-          </View>
-          {/* <DiscussedCard /> */}
-
-          {data.map(email => {
-            return (
-              //   <TouchableOpacity onPress={()=>alert(email.user.name)} key={email.id} style={styles.emailItem}>
-              //     <View>
-              //       <Text>{email.user.name}</Text>
-              //       <Text style={styles.emailSubject}>{email.subject}</Text>
-              //       <Text>{email.description}</Text>
-
-              //     </View>
-              //   </TouchableOpacity>
-
-              <View key={email.id} style={styles.cardContainer}>
-                <View style={styles.card}>
-                  <View style={styles.headerBlock}>
-                    <View style={{ width: "20%", height: 75, padding: 10 }}>
-                      <Icon_Ionicons name="md-contact" size={70} color="blue" />
+                      <Menu
+                        ref={this.setMenuRef}
+                        button={
+                          <View>
+                            <Icon_Ionicons
+                              name="md-contacts"
+                              color="white"
+                              size={30}
+                            />
+                            <Text style={{ color: "white" }}>05</Text>
+                          </View>
+                        }
+                      >
+                        <MenuItem onPress={this.gotoDiscussion}>
+                          Discussion Info
+                        </MenuItem>
+                        <MenuItem onPress={this.hideMenu}>Group Media</MenuItem>
+                        <MenuItem onPress={this.hideMenu} disabled>
+                          Search
+                        </MenuItem>
+                        <MenuDivider />
+                        <MenuItem onPress={this.hideMenu}>
+                          Mute Notification
+                        </MenuItem>
+                        <MenuItem onPress={this.hideMenu}>More</MenuItem>
+                      </Menu>
                     </View>
-                    <View style={styles.discription}>
-                      <Text style={styles.header}>{email.description}</Text>
+                    {/* <Icon_Entypo  name="dots-three-vertical"    
+              
+              size={25} color="white"
+              />  */}
+                  </TouchableOpacity>
+                </Right>
+              </Header>
+            </View>
+            {/* <DiscussedCard /> */}
+
+            {this.state.answers.data.data.map(email => {
+              return (
+                <View key={email.id} style={styles.cardContainer}>
+                  <View style={styles.card}>
+                    <View style={styles.headerBlock}>
+                      <View style={{ width: "20%", height: 75, padding: 10 }}>
+                        <Icon_Ionicons
+                          name="md-contact"
+                          size={70}
+                          color="blue"
+                        />
+                      </View>
+                      <View style={styles.discription}>
+                        <Text style={styles.header}>{email.answer}</Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-            );
-          })}
-        </ScrollView>
-        <View style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}>
-          {/* <Header style={{ backgroundColor: '#6D0F49' }}
-                    androidStatusBarColor={'#6D0F49'}>
-                <Body>
-                   <TextInput
-                        style={styles.textArea}
-                        onChangeText={(text) => this.setState({text})}
-                        value={this.state.text}
-                        placeholder={"Input your Discussion"}
-                    />
-                </Body>
-                <Right> 
-                    <Button transparent>
-                    <Icon name='pencil' />
-                    </Button>
-                </Right>
-                </Header> */}
-          <View style={styles.card}>
-            <View style={styles.headerBlock}>
-              <View
-                style={{
-                  width: "85%",
-                  height: 75,
-                  backgroundColor: "#9F035C",
-                  padding: 10
-                }}
-              >
-                {/* <Text style={styles.header}>
-                         Vvhjvhdf
-                    </Text> */}
-                <TextInput
-                  style={styles.textArea}
-                  onChangeText={text => this.setState({ text })}
-                  value={this.state.text}
-                  placeholder={"Input your Discussion"}
-                />
-              </View>
-              <View
-                style={{
-                  width: "15%",
-                  height: 75,
-                  backgroundColor: "#9F035C",
-                  padding: 10
-                }}
-              >
-                <TouchableOpacity>
-                  <Icon_Ionicons name="md-send" size={40} color="white" />
-                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+          <View
+            style={{ /*position: "absolute",*/ left: 0, right: 0, bottom: 0 }}
+          >
+            <View style={styles.card}>
+              <View style={styles.headerBlock}>
+                <View
+                  style={{
+                    width: "85%",
+                    height: 75,
+                    backgroundColor: "#9F035C",
+                    padding: 10
+                  }}
+                >
+                  {/* <Text style={styles.header}>
+                           Vvhjvhdf
+                      </Text> */}
+                  <TextInput
+                    style={styles.textArea}
+                    onChangeText={text => this.setState({ text })}
+                    value={this.state.text}
+                    placeholder={"Input your Discussion"}
+                  />
+                </View>
+                <View
+                  style={{
+                    width: "15%",
+                    height: 75,
+                    backgroundColor: "#9F035C",
+                    padding: 10
+                  }}
+                >
+                  <TouchableOpacity onPress={this.createAnswer.bind(this)}>
+                    <Icon_Ionicons name="md-send" size={40} color="white" />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    }
   }
 }
 
@@ -334,7 +439,7 @@ const styles = StyleSheet.create({
 
   title: {
     color: "white",
-    fontSize: 19,
-    fontWeight: "600"
+    fontSize: 12,
+    fontWeight: "400"
   }
 });
