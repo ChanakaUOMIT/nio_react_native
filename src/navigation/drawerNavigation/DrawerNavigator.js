@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { createDrawerNavigator, DrawerItems } from "react-navigation";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import IconOcticons from "react-native-vector-icons/Octicons";
 //import TabNavigator from '../tabNavigation/TabNavigator'
 import DrawerScreen1 from "../../screens/drawerScreen/DrawerScreen1";
 import DrawerScreen2 from "../../screens/drawerScreen/DrawerScreen2";
@@ -55,24 +56,26 @@ export default createDrawerNavigator(
     DrawerScreen1: {
       screen: DrawerScreen1,
       navigationOptions: {
-        drawerLabel: "DrawerScreen1",
-        drawerIcon: ({ tintColor }) => <Icon name="user-circle" size={17} />
+        drawerLabel: "Discussion",
+        drawerIcon: ({ tintColor }) => (
+          <IconOcticons name="comment-discussion" size={17} />
+        )
       }
     },
 
     DrawerScreen2: {
       screen: DrawerScreen2,
       navigationOptions: {
-        drawerLabel: "DrawerScreen2",
-        drawerIcon: ({ tintColor }) => <Icon name="user-circle" size={17} />
+        drawerLabel: "News Feed",
+        drawerIcon: ({ tintColor }) => <Icon name="newspaper" size={17} />
       }
     },
 
     DrawerScreen3: {
       screen: DrawerScreen3,
       navigationOptions: {
-        drawerLabel: "DrawerScreen3",
-        drawerIcon: ({ tintColor }) => <Icon name="user-circle" size={17} />
+        drawerLabel: "Task Feed",
+        drawerIcon: ({ tintColor }) => <Icon name="heart" size={17} />
       }
     },
     DrawerScreen4: {
