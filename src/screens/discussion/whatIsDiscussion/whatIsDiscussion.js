@@ -205,8 +205,8 @@ class WhatIsDiscussion extends Component {
   }
 
   createAnswer() {
-    alert(this.state.text);
-    // this.putAnswer();
+    // alert(this.state.text);
+    this.putAnswer();
   }
 
   async putAnswer() {
@@ -231,6 +231,7 @@ class WhatIsDiscussion extends Component {
         .then(response => response.json())
         .then(responseJson => {
           console.log("Put answer: ", responseJson);
+          alert(responseJson.message);
         });
     } catch (errors) {
       alert(errors);
@@ -247,8 +248,8 @@ class WhatIsDiscussion extends Component {
       );
     } else {
       return (
-        <View>
-          <ScrollView>
+        <View style={{ flex: 1, paddingBottom: 75 }}>
+          <ScrollView style={{ paddingBottom: 300 }}>
             <CustomHeader
               title=""
               alignItems="center"
@@ -333,7 +334,7 @@ class WhatIsDiscussion extends Component {
                 <View key={email.id} style={styles.cardContainer}>
                   <View style={styles.card}>
                     <View style={styles.headerBlock}>
-                      <View style={{ width: "20%", height: 75, padding: 10 }}>
+                      <View style={{ width: "23%", height: 75, padding: 10 }}>
                         <Icon_Ionicons
                           name="md-contact"
                           size={70}
@@ -349,8 +350,15 @@ class WhatIsDiscussion extends Component {
               );
             })}
           </ScrollView>
+
           <View
-            style={{ /*position: "absolute",*/ left: 0, right: 0, bottom: 0 }}
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              alignSelf: "flex-end"
+            }}
           >
             <View style={styles.card}>
               <View style={styles.headerBlock}>
@@ -362,9 +370,6 @@ class WhatIsDiscussion extends Component {
                     padding: 10
                   }}
                 >
-                  {/* <Text style={styles.header}>
-                           Vvhjvhdf
-                      </Text> */}
                   <TextInput
                     style={styles.textArea}
                     onChangeText={text => this.setState({ text })}
