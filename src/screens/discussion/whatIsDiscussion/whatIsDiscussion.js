@@ -247,7 +247,7 @@ class WhatIsDiscussion extends Component {
       );
     } else {
       return (
-        <View>
+        <View style={{ flex: 1 }}>
           <ScrollView>
             <CustomHeader
               title=""
@@ -349,8 +349,15 @@ class WhatIsDiscussion extends Component {
               );
             })}
           </ScrollView>
+
           <View
-            style={{ /*position: "absolute",*/ left: 0, right: 0, bottom: 0 }}
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              alignSelf: "flex-end"
+            }}
           >
             <View style={styles.card}>
               <View style={styles.headerBlock}>
@@ -362,9 +369,6 @@ class WhatIsDiscussion extends Component {
                     padding: 10
                   }}
                 >
-                  {/* <Text style={styles.header}>
-                           Vvhjvhdf
-                      </Text> */}
                   <TextInput
                     style={styles.textArea}
                     onChangeText={text => this.setState({ text })}
